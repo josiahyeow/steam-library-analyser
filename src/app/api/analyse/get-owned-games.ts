@@ -63,9 +63,15 @@ export async function getOwnedGames({ steamId }: { steamId: string }) {
     return mostPlayed
   })
 
+  const totalPlayTime = games.reduce(
+    (total, game) => total + game.playtimeHours,
+    0
+  )
+
   return {
     gameCount,
     games,
     mostPlayedGame,
+    totalPlayTime,
   }
 }

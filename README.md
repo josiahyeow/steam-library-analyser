@@ -4,6 +4,11 @@
 
 [https://steam-library-analyser.vercel.app/](https://steam-library-analyser.vercel.app/)
 
+Steam IDs that can be analysed using the API key on the server:
+
+- `76561198070338426`
+- `76561198040902589`
+
 ## Getting started
 
 ### Prerequisites

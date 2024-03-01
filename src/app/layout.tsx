@@ -1,8 +1,18 @@
 import type { Metadata } from "next"
-import { DM_Sans } from "next/font/google"
+import { DM_Sans, Syne } from "next/font/google"
 import "./globals.css"
 
-const dmSans = DM_Sans({ subsets: ["latin"] })
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-dm-sans",
+})
+
+const syne = Syne({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-syne",
+})
 
 export const metadata: Metadata = {
   title: "Steam Game Library Analyser",
@@ -16,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={dmSans.className}>{children}</body>
+      <body className={`${dmSans.className} ${syne.variable}`}>{children}</body>
     </html>
   )
 }

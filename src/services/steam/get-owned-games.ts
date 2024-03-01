@@ -1,5 +1,5 @@
 import { fromUnixTime } from "date-fns"
-import { steam } from "./steam/client"
+import { steamClient } from "./client"
 
 export type Game = {
   appId: string
@@ -23,7 +23,7 @@ export async function getOwnedGames({
 }: {
   steamId: string
 }): Promise<GamesAnalysis> {
-  const { game_count, games: _games } = await steam().getOwnedGames({
+  const { game_count, games: _games } = await steamClient().getOwnedGames({
     steamId,
   })
 

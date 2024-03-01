@@ -1,14 +1,14 @@
 import { getUnixTime } from "date-fns"
+import { steamClient } from "./client"
 import { getOwnedGames } from "./get-owned-games"
-import { steam } from "./steam/client"
 
-jest.mock("./steam/client")
+jest.mock("./client")
 
 describe("get owned games", () => {
   beforeEach(() => {
     jest.resetAllMocks()
 
-    jest.mocked(steam).mockReturnValue({
+    jest.mocked(steamClient).mockReturnValue({
       getOwnedGames: jest.fn().mockResolvedValue({
         game_count: 2,
         games: [

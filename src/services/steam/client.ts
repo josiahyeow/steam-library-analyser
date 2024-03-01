@@ -3,7 +3,7 @@ import { GetOwnedGamesResponse, GetPlayerSummariesResponse } from "./types"
 const API_BASEPATH = process.env.STEAM_API_BASEPATH!
 const API_KEY = process.env.STEAM_API_KEY!
 
-export function steam(
+export function steamClient(
   { apiBasepath, apiKey } = {
     apiBasepath: API_BASEPATH,
     apiKey: API_KEY,

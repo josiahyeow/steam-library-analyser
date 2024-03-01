@@ -1,4 +1,4 @@
-import { getOwnedGames, getPlayerSummary } from "../api/analyse"
+import { getOwnedGames, getPlayerSummary } from "../../services/steam"
 import { Analysis } from "./analysis"
 
 export default async function AnalysisPage({

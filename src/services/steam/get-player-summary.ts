@@ -1,4 +1,4 @@
-import { steam } from "./steam/client"
+import { steamClient } from "./client"
 
 export type Player = {
   steamId: string
@@ -10,7 +10,7 @@ export type Player = {
 }
 
 export async function getPlayerSummary({ steamId }: { steamId: string }) {
-  const { players } = await steam().getPlayerSummary({
+  const { players } = await steamClient().getPlayerSummary({
     steamId,
   })
 

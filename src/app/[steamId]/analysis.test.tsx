@@ -2,7 +2,7 @@ import "@testing-library/jest-dom"
 import { render, screen } from "@testing-library/react"
 import { Analysis } from "./analysis"
 
-jest.mock("../api/analyse")
+jest.mock("../../services/steam")
 
 describe("Analysis", () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { Game } from "../api/analyse/get-owned-games"
+import { Game } from "../../services/steam/get-owned-games"
 import { GameCard, MostPlayedTag } from "./game-card"
 
 export function GamesList({

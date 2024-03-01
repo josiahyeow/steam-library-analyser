@@ -2,7 +2,7 @@ import { format, isAfter } from "date-fns"
 import Icon from "feather-icons-react"
 import Image from "next/image"
 import { useMemo } from "react"
-import { Game } from "../api/analyse/get-owned-games"
+import { Game } from "../../services/steam/get-owned-games"
 
 export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
   const playtime = useMemo(() => {

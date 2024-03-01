@@ -1,5 +1,5 @@
 import { H1, H2 } from "../../components/headings"
-import { GamesAnalysis, Player } from "../api/analyse"
+import { GamesAnalysis, Player } from "../../services/steam"
 import { GamesList } from "./games-list"
 import { GeneratedImage } from "./generated-image"
 import { KeyMetric } from "./key-metric"

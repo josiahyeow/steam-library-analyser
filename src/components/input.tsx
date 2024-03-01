@@ -1,5 +1,3 @@
-"use client"
-
 import { ChangeEvent } from "react"
 
 export function Input({

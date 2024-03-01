@@ -1,4 +1,4 @@
-import { H1, H2 } from "@/components/headings"
+import { H1, H2 } from "../../components/headings"
 import { getOwnedGames } from "../api/analyse/get-owned-games"
 import { getPlayerSummary } from "../api/analyse/get-player-summary"
 import { GamesList } from "./games-list"

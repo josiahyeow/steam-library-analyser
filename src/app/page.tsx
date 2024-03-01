@@ -1,9 +1,8 @@
 "use client"
 
-import { H1 } from "@/components/headings"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { Button, Input } from "../components"
+import { Button, H1, Input } from "../components"
 
 export default function Home() {
   const router = useRouter()

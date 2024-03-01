@@ -1,27 +1,5 @@
 import { fromUnixTime } from "date-fns"
-
-const API_BASEPATH = process.env.STEAM_API_BASEPATH
-const API_KEY = process.env.STEAM_API_KEY
-
-type OwnedGameData = {
-  appid: number
-  name: string
-  playtime_forever: number
-  img_icon_url: string
-  has_community_visible_stats: boolean
-  playtime_windows_forever: number
-  playtime_mac_forever: number
-  playtime_linux_forever: number
-  rtime_last_played: number
-  playtime_disconnected: number
-}
-
-type OwnedGamesResponse = {
-  response: {
-    game_count: number
-    games: OwnedGameData[]
-  }
-}
+import { steam } from "./steam/client"
 
 export type Game = {
   appId: string
@@ -34,23 +12,11 @@ export type Game = {
 }
 
 export async function getOwnedGames({ steamId }: { steamId: string }) {
-  const endpoint = new URL("/IPlayerService/GetOwnedGames/v0001/", API_BASEPATH)
-
-  const params = new URLSearchParams({
-    key: API_KEY!,
-    steamid: steamId,
-    include_appinfo: "1",
-    format: "json",
+  const { game_count, games: _games } = await steam().getOwnedGames({
+    steamId,
   })
 
-  endpoint.search = params.toString()
-
-  const response = await fetch(endpoint.toString())
-  const data: OwnedGamesResponse = await response.json()
-
-  const gameCount = data.response.game_count
-
-  const games: Game[] = data.response.games
+  const games: Game[] = _games
     .map((game) => ({
       appId: game.appid.toString(),
       name: game.name,
@@ -75,7 +41,7 @@ export async function getOwnedGames({ steamId }: { steamId: string }) {
   )
 
   return {
-    gameCount,
+    gameCount: game_count,
     games,
     mostPlayedGame,
     totalPlayTime,

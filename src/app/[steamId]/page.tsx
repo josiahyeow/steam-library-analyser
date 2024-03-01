@@ -15,38 +15,52 @@ export default async function GameLibrary({
   const { player } = await getPlayerSummary({ steamId: params.steamId })
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-8 sm:p-24 gap-8 bg-black text-white">
-      <h1 className="text-6xl font-bold tracking-tighter">
-        {player.personaName}
-      </h1>
+    <main className="flex min-h-screen flex-col justify-between p-8 sm:p-24 gap-16 bg-black text-white">
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-8">
+          <h1 className="text-6xl font-bold tracking-tighter">
+            {player.personaName}
+          </h1>
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-row gap-8">
+              <div>
+                <span className="text-sm">Total hours played</span>
 
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-row gap-8">
-          <div>
-            <span className="text-sm">Total hours played</span>
+                <div className="font-bold text-3xl">
+                  {totalPlayTime.toFixed(1)}
+                </div>
+              </div>
+              <div>
+                <span className="text-sm">Steam games</span>
 
-            <div className="font-bold text-3xl">{totalPlayTime.toFixed(1)}</div>
-          </div>
-          <div>
-            <span className="text-sm">Steam games</span>
-
-            <div className="font-bold text-3xl">{gameCount}</div>
+                <div className="font-bold text-3xl">{gameCount}</div>
+              </div>
+            </div>
           </div>
         </div>
+        <Image
+          src="/generated-image.jpg"
+          width={500}
+          height={500}
+          alt="player generated image"
+          className="aspect-square size-64"
+        />
       </div>
 
-      <h2 className="text-2xl font-bold">Owned games</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-8">
-        {[mostPlayedGame, ...games.slice(1, games.length)].map(
-          (game, index) => (
-            <GameCard
-              key={game.appId}
-              game={game}
-              tag={index === 0 ? <MostPlayedTag /> : null}
-            />
-          )
-        )}
-      </div>
+      <section className="flex flex-col gap-8">
+        <h2 className="text-2xl font-bold">Owned games</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center gap-8">
+          {[mostPlayedGame, ...games.slice(1, games.length)].map(
+            (game, index) => (
+              <GameCard
+                key={game.appId}
+                game={game}
+                tag={index === 0 ? <MostPlayedTag /> : null}
+              />
+            )
+          )}
+        </div>
+      </section>
     </main>
   )
 }
@@ -70,7 +84,7 @@ function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
     <a
       href={game.storeUrl}
       target="_blank"
-      className="flex flex-col border-2 border-zinc-900 rounded-md hover:ring ring-white/80 hover:shadow-lg hover:shadow-white/30 transition-all"
+      className="overflow-hidden flex flex-col border-2 border-zinc-900 rounded-md hover:ring ring-white/80 hover:shadow-lg hover:shadow-white/30 transition-all"
     >
       <div>
         <Image

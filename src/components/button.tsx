@@ -1,7 +1,7 @@
 "use client"
 
 const buttonStyles =
-  "bg-white text-black p-3 rounded-md text-center font-bold sm:min-w-64 hover:ring-2 ring-white transition-all border:none"
+  "bg-white text-black p-3 rounded-md text-center font-bold sm:min-w-64 hover:ring ring-white/40 hover:shadow-lg hover:shadow-white/30 transition-all border:none"
 
 export function Button({
   children,

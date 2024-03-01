@@ -1,5 +1,6 @@
 "use client"
 
+import { H1 } from "@/components/headings"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Button, Input } from "../components"
@@ -8,15 +9,15 @@ export default function Home() {
   const router = useRouter()
 
   return (
-    <main className="flex min-h-screen max-w-xl m-auto flex-col p-24 bg-black text-white gap-8">
-      <h1 className="text-3xl font-bold tracking-tighter text-balance">
-        Analyse your Steam game library
-      </h1>
-      <SteamIdForm
-        onSubmit={(steamId) => {
-          router.push(`/${steamId}`)
-        }}
-      />
+    <main className="flex justify-center h-screen max-w-xl m-auto flex-col p-8 sm:p-24 bg-black text-white gap-8">
+      <div className="flex flex-col gap-16 -mt-64">
+        <H1>Analyse your Steam game library</H1>
+        <SteamIdForm
+          onSubmit={(steamId) => {
+            router.push(`/${steamId}`)
+          }}
+        />
+      </div>
     </main>
   )
 }

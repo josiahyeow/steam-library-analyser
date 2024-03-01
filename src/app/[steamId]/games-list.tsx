@@ -10,11 +10,11 @@ export function GamesList({
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center gap-8">
-      {[mostPlayedGame, ...games.slice(1, games.length)].map((game, index) => (
+      {games.map((game) => (
         <GameCard
           key={game.appId}
           game={game}
-          tag={index === 0 ? <MostPlayedTag /> : null}
+          tag={game.appId === mostPlayedGame.appId ? <MostPlayedTag /> : null}
         />
       ))}
     </div>

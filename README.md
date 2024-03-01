@@ -47,3 +47,15 @@ This endpoint returns:
 ```
 http://localhost:3000/api/analyse?steamId=<steamid>
 ```
+
+## Bonus Feature Idea
+
+### AI Generated Player Image
+
+Use AI to generate a unique player image based on the analysis of their gamer profile. We can add some branding and make it appealing to share on social media to increase virality.
+
+Example input to the AI generator could be:
+
+"Player with 500 hours of gameplay time, owns 325 games and has played League of Legends the most."
+
+The application has a placeholder image to show what it could look like on the page.

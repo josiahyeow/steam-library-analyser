@@ -20,6 +20,8 @@ STEAM_API_BASEPATH=http://api.steampowered.com
 STEAM_API_KEY=<your steam api key>
 ```
 
+Note that the accounts that can be analysed depends on the access your Steam API key has.
+
 ### 2. Install dependencies
 
 ```bash

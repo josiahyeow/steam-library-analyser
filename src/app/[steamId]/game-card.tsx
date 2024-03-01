@@ -17,9 +17,16 @@ export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
     return `${game.playtimeHours.toFixed(1)} hours`
   }, [game.playtimeHours])
 
-  const lastPlayed = isAfter(game.lastPlayed, new Date("1970-01-01"))
-    ? format(game.lastPlayed, "d/M/yyyy")
-    : "-"
+  const lastPlayed = useMemo(() => {
+    if (!game.lastPlayed) {
+      return null
+    }
+    if (isAfter(game.lastPlayed, new Date("1970-01-01"))) {
+      return format(game.lastPlayed, "d/M/yyyy")
+    }
+
+    return "-"
+  }, [game.lastPlayed])
 
   return (
     <a
@@ -43,7 +50,9 @@ export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
         </div>
         <div className="flex flex-row gap-8">
           <GameMetric label="Time played" value={playtime} />
-          <GameMetric label="Last played on" value={lastPlayed} />
+          {lastPlayed && (
+            <GameMetric label="Last played on" value={lastPlayed} />
+          )}
         </div>
       </div>
     </a>

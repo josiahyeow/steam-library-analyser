@@ -7,7 +7,7 @@ export type Game = {
   playtimeHours: number
   imgIconUrl: string
   imgHeroUrl: string
-  lastPlayed: Date
+  lastPlayed: Date | null
   storeUrl: string
 }
 
@@ -34,7 +34,9 @@ export async function getOwnedGames({
       playtimeHours: game.playtime_forever / 60,
       imgIconUrl: `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`,
       imgHeroUrl: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.appid}/header.jpg`,
-      lastPlayed: fromUnixTime(game.rtime_last_played),
+      lastPlayed: game.rtime_last_played
+        ? fromUnixTime(game.rtime_last_played)
+        : null,
       storeUrl: `https://store.steampowered.com/app/${game.appid}`,
     }))
     .sort((a, b) => b.playtimeHours - a.playtimeHours)

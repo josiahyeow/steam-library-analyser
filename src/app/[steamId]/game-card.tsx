@@ -31,23 +31,29 @@ export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
           {tag && <div className="">{tag}</div>}
         </div>
         <div className="flex flex-row gap-8">
-          <div>
-            <h4 className="text-xs">Time played</h4>
-            <div className="flex flex-row justify-center items-center gap-2">
-              <Icon icon="clock" size={16} />
-              {playtime}
-            </div>
-          </div>
-          <div>
-            <h4 className="text-xs">Last played on</h4>
-            <div className="flex flex-row justify-center items-center gap-2">
-              <Icon icon="calendar" size={16} />
-              {lastPlayed}
-            </div>
-          </div>
+          <GameMetric label="Time played" value={playtime} />
+          <GameMetric label="Last played on" value={lastPlayed} />
         </div>
       </div>
     </a>
+  )
+}
+
+function GameMetric({
+  label,
+  value,
+}: {
+  label: string
+  value: string | number
+}) {
+  return (
+    <div className="flex flex-col gap-1">
+      <h4 className="text-xs">{label}</h4>
+      <div className="flex flex-row justify-start items-center gap-2">
+        <Icon icon="clock" size={16} />
+        {value}
+      </div>
+    </div>
   )
 }
 

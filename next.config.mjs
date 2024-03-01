@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ["cdn.cloudflare.steamstatic.com", "avatars.steamstatic.com"],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

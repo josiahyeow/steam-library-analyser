@@ -1,5 +1,7 @@
-import { format } from "date-fns"
+import { format, isAfter } from "date-fns"
+import Image from "next/image"
 import { Game, getOwnedGames } from "../api/analyse/get-owned-games"
+import { getPlayerSummary } from "../api/analyse/get-player-summary"
 
 export default async function GameLibrary({
   params,
@@ -10,75 +12,93 @@ export default async function GameLibrary({
     await getOwnedGames({
       steamId: params.steamId,
     })
+  const { player } = await getPlayerSummary({ steamId: params.steamId })
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-8 sm:p-24 gap-8">
-      <div className="flex flex-wrap gap-32 border border-zinc-800 rounded-lg p-4 bg-zinc-5">
-        <div>
-          <div className="font-bold text-3xl">{totalPlayTime.toFixed(1)}</div>
-          <span className="text-sm">Total hours played</span>
-        </div>
-        <div>
-          <div className="font-bold text-3xl">{gameCount}</div>
-          <span className="text-sm">Number of Steam games</span>
-        </div>
-      </div>
+    <main className="flex min-h-screen flex-col justify-between p-8 sm:p-24 gap-8 bg-black text-white">
+      <h1 className="text-6xl font-bold tracking-tighter">
+        {player.personaName}
+      </h1>
 
-      <div className="flex flex-wrap gap-32 border border-zinc-800 rounded-lg p-4">
-        <h2 className="font-bold">Most played game</h2>
-        <div className="rounded-sm overflow-hidden">
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-row gap-8">
           <div>
-            <img
-              src={mostPlayedGame.imgIconUrl}
-              alt={mostPlayedGame.name}
-              width={32}
-              height={32}
-            />
-          </div>
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold">{mostPlayedGame.name}</h3>
-            <div>
-              <h4 className="text-xs">Time played</h4>
-              <div>{mostPlayedGame.playtimeHours.toFixed(1)} hours</div>
-            </div>
+            <span className="text-sm">Total hours played</span>
 
-            <div>
-              <h4 className="text-xs">Last played on</h4>
-              <div>{format(mostPlayedGame.lastPlayed, "d/M/yyyy")}</div>
-            </div>
+            <div className="font-bold text-3xl">{totalPlayTime.toFixed(1)}</div>
+          </div>
+          <div>
+            <span className="text-sm">Steam games</span>
+
+            <div className="font-bold text-3xl">{gameCount}</div>
           </div>
         </div>
       </div>
 
       <h2 className="text-2xl font-bold">Owned games</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-8">
-        {games.map((game) => (
-          <GameCard key={game.appId} game={game} />
-        ))}
+        {[mostPlayedGame, ...games.slice(1, games.length)].map(
+          (game, index) => (
+            <GameCard
+              key={game.appId}
+              game={game}
+              tag={index === 0 ? <MostPlayedTag /> : null}
+            />
+          )
+        )}
       </div>
     </main>
   )
 }
 
-function GameCard({ game }: { game: Game }) {
+function MostPlayedTag() {
   return (
-    <div className="flex gap-4 border border-zinc-800 p-4 rounded-md">
-      <div className="rounded-sm overflow-hidden">
-        <img src={game.imgIconUrl} alt={game.name} width={32} height={32} />
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <h3 className="font-bold">{game.name}</h3>
-        <div>
-          <h4 className="text-xs">Time played</h4>
-          <div>{game.playtimeHours.toFixed(1)} hours</div>
-        </div>
-
-        <div>
-          <h4 className="text-xs">Last played on</h4>
-          <div>{format(game.lastPlayed, "d/M/yyyy")}</div>
-        </div>
-      </div>
+    <div className="bg-white text-black px-2 py-1 rounded-sm text-xs">
+      Most played
     </div>
+  )
+}
+
+function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
+  const playtime =
+    game.playtimeHours > 0 ? `${game.playtimeHours.toFixed(1)} hours` : "-"
+  const lastPlayed = isAfter(game.lastPlayed, new Date("1970-01-01"))
+    ? format(game.lastPlayed, "d/M/yyyy")
+    : "-"
+
+  return (
+    <a
+      href={game.storeUrl}
+      target="_blank"
+      className="flex flex-col border-2 border-zinc-900 rounded-md hover:ring ring-white/80 hover:shadow-lg hover:shadow-white/30 transition-all"
+    >
+      <div>
+        <Image
+          src={game.imgHeroUrl}
+          alt={game.name}
+          width={500}
+          height={250}
+          className="w-full"
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-row gap-4">
+          <h3 className="font-bold">{game.name}</h3>
+          {tag && <div className="">{tag}</div>}
+        </div>
+        <div className="flex flex-row gap-8">
+          <div>
+            <h4 className="text-xs">Time played</h4>
+            <div>{playtime}</div>
+          </div>
+
+          <div>
+            <h4 className="text-xs">Last played on</h4>
+            <div>{lastPlayed}</div>
+          </div>
+        </div>
+      </div>
+    </a>
   )
 }

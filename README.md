@@ -6,7 +6,7 @@
 
 ## Getting started
 
-### Prequisites
+### Prerequisites
 
 - node
 - node package manager such as npm, yarn or pnpm

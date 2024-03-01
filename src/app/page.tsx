@@ -27,7 +27,7 @@ function SteamIdForm({ onSubmit }: { onSubmit: (steamId: string) => void }) {
 
   return (
     <form
-      onSubmit={(e: React.FormEvent) => {
+      onSubmit={(e) => {
         e.preventDefault()
         onSubmit(steamId)
       }}

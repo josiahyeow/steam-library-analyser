@@ -9,5 +9,11 @@ export async function GET(request: NextRequest) {
   }
 
   const data = await getOwnedGames({ steamId })
-  return NextResponse.json(data)
+
+  const analysis = {
+    total_games_owned: data.gameCount,
+    total_playtime: data.totalPlayTime,
+    most_played_game: data.mostPlayedGame,
+  }
+  return NextResponse.json(analysis)
 }

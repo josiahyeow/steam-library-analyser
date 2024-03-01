@@ -23,7 +23,7 @@ type OwnedGamesResponse = {
   }
 }
 
-type Game = {
+export type Game = {
   appId: string
   name: string
   playtimeHours: number

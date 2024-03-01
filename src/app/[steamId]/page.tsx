@@ -16,7 +16,7 @@ export default async function GameLibrary({
 
   return (
     <main className="flex min-h-screen flex-col justify-between p-8 sm:p-24 gap-16 bg-black text-white">
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-8 flex-col-reverse sm:flex-row justify-between">
         <div className="flex flex-col gap-8">
           <h1 className="text-6xl font-bold tracking-tighter">
             {player.personaName}
@@ -43,7 +43,7 @@ export default async function GameLibrary({
           width={500}
           height={500}
           alt="player generated image"
-          className="aspect-square size-64"
+          className="aspect-square w-full sm:size-64"
         />
       </div>
 

@@ -1,3 +1,5 @@
+import Icon from "feather-icons-react"
+import Link from "next/link"
 import { H1, H2 } from "../../components/headings"
 import { GamesAnalysis, Player } from "../../services/steam"
 import { GamesList } from "./games-list"
@@ -26,6 +28,14 @@ export function Analysis({ data }: { data: GamesAnalysis & Player }) {
         <H2>Owned games</H2>
         <GamesList games={data.games} mostPlayedGame={data.mostPlayedGame} />
       </section>
+      <footer>
+        <Link href="/" className="link">
+          <div className="flex flex-row gap-2">
+            <Icon icon="chevron-left" />
+            Analyse another library
+          </div>
+        </Link>
+      </footer>
     </main>
   )
 }

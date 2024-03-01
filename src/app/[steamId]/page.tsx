@@ -9,11 +9,13 @@ export default async function GameLibrary({
 }: {
   params: { steamId: string }
 }) {
-  const { gameCount, games, mostPlayedGame, totalPlayTime } =
-    await getOwnedGames({
-      steamId: params.steamId,
-    })
-  const { player } = await getPlayerSummary({ steamId: params.steamId })
+  const [{ gameCount, games, mostPlayedGame, totalPlayTime }, { player }] =
+    await Promise.all([
+      getOwnedGames({
+        steamId: params.steamId,
+      }),
+      getPlayerSummary({ steamId: params.steamId }),
+    ])
 
   return (
     <main className="flex min-h-screen max-w-6xl m-auto flex-col justify-between p-8 sm:p-24 gap-16 bg-black text-white">
@@ -32,7 +34,7 @@ export default async function GameLibrary({
                 </div>
               </div>
               <div>
-                <span className="text-sm">Steam games</span>
+                <span className="text-sm">Games owned</span>
 
                 <div className="font-bold text-3xl">{gameCount}</div>
               </div>

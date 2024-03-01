@@ -1,7 +1,8 @@
-import { format, isAfter } from "date-fns"
+import Icon from "feather-icons-react"
 import Image from "next/image"
-import { Game, getOwnedGames } from "../api/analyse/get-owned-games"
+import { getOwnedGames } from "../api/analyse/get-owned-games"
 import { getPlayerSummary } from "../api/analyse/get-player-summary"
+import { GameCard, MostPlayedTag } from "./game-card"
 
 export default async function GameLibrary({
   params,
@@ -15,7 +16,7 @@ export default async function GameLibrary({
   const { player } = await getPlayerSummary({ steamId: params.steamId })
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-8 sm:p-24 gap-16 bg-black text-white">
+    <main className="flex min-h-screen max-w-6xl m-auto flex-col justify-between p-8 sm:p-24 gap-16 bg-black text-white">
       <div className="flex flex-col gap-8 flex-col-reverse sm:flex-row justify-between">
         <div className="flex flex-col gap-8">
           <h1 className="text-6xl font-bold tracking-tighter">
@@ -38,13 +39,22 @@ export default async function GameLibrary({
             </div>
           </div>
         </div>
-        <Image
-          src="/generated-image.jpg"
-          width={500}
-          height={500}
-          alt="player generated image"
-          className="aspect-square w-full sm:size-64"
-        />
+        <div className="flex flex-col gap-4 sm:max-w-[256px]">
+          <Image
+            src="/generated-image.jpg"
+            width={500}
+            height={500}
+            alt="player generated image"
+            className="aspect-square w-full sm:size-64"
+          />
+          <div className="flex flex-row gap-2">
+            <Icon icon="hexagon" size={16} />
+            <span className="text-xs leading-snug">
+              This image is unique to you and was generated based on your game
+              library analysis.
+            </span>
+          </div>
+        </div>
       </div>
 
       <section className="flex flex-col gap-8">
@@ -62,57 +72,5 @@ export default async function GameLibrary({
         </div>
       </section>
     </main>
-  )
-}
-
-function MostPlayedTag() {
-  return (
-    <div className="bg-white text-black px-2 py-1 rounded-sm text-xs">
-      Most played
-    </div>
-  )
-}
-
-function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
-  const playtime =
-    game.playtimeHours > 0 ? `${game.playtimeHours.toFixed(1)} hours` : "-"
-  const lastPlayed = isAfter(game.lastPlayed, new Date("1970-01-01"))
-    ? format(game.lastPlayed, "d/M/yyyy")
-    : "-"
-
-  return (
-    <a
-      href={game.storeUrl}
-      target="_blank"
-      className="overflow-hidden flex flex-col border-2 border-zinc-900 rounded-md hover:ring ring-white/80 hover:shadow-lg hover:shadow-white/30 transition-all"
-    >
-      <div>
-        <Image
-          src={game.imgHeroUrl}
-          alt={game.name}
-          width={500}
-          height={250}
-          className="w-full"
-        />
-      </div>
-
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex flex-row gap-4">
-          <h3 className="font-bold">{game.name}</h3>
-          {tag && <div className="">{tag}</div>}
-        </div>
-        <div className="flex flex-row gap-8">
-          <div>
-            <h4 className="text-xs">Time played</h4>
-            <div>{playtime}</div>
-          </div>
-
-          <div>
-            <h4 className="text-xs">Last played on</h4>
-            <div>{lastPlayed}</div>
-          </div>
-        </div>
-      </div>
-    </a>
   )
 }

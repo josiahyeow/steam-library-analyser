@@ -11,7 +11,18 @@ export type Game = {
   storeUrl: string
 }
 
-export async function getOwnedGames({ steamId }: { steamId: string }) {
+export type GamesAnalysis = {
+  gameCount: number
+  games: Game[]
+  mostPlayedGame: Game
+  totalPlayTime: number
+}
+
+export async function getOwnedGames({
+  steamId,
+}: {
+  steamId: string
+}): Promise<GamesAnalysis> {
   const { game_count, games: _games } = await steam().getOwnedGames({
     steamId,
   })

@@ -1,11 +1,22 @@
 import { format, isAfter } from "date-fns"
 import Icon from "feather-icons-react"
 import Image from "next/image"
+import { useMemo } from "react"
 import { Game } from "../api/analyse/get-owned-games"
 
 export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
-  const playtime =
-    game.playtimeHours > 0 ? `${game.playtimeHours.toFixed(1)} hours` : "-"
+  const playtime = useMemo(() => {
+    if (game.playtimeHours < 0) {
+      return "-"
+    }
+
+    if (game.playtimeHours === 1) {
+      return `${game.playtimeHours.toFixed(0)} hour`
+    }
+
+    return `${game.playtimeHours.toFixed(1)} hours`
+  }, [game.playtimeHours])
+
   const lastPlayed = isAfter(game.lastPlayed, new Date("1970-01-01"))
     ? format(game.lastPlayed, "d/M/yyyy")
     : "-"

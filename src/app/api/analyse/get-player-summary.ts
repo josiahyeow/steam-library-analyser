@@ -1,6 +1,6 @@
 import { steam } from "./steam/client"
 
-type Player = {
+export type Player = {
   steamId: string
   personaName: string
   profileUrl: string

@@ -1,11 +1,15 @@
 import { H1, H2 } from "../../components/headings"
-import { getOwnedGames } from "../api/analyse/get-owned-games"
-import { getPlayerSummary } from "../api/analyse/get-player-summary"
+import {
+  GamesAnalysis,
+  Player,
+  getOwnedGames,
+  getPlayerSummary,
+} from "../api/analyse"
 import { GamesList } from "./games-list"
 import { GeneratedImage } from "./generated-image"
 import { KeyMetric } from "./key-metric"
 
-export default async function Analysis({
+export default async function AnalysisPage({
   params,
 }: {
   params: { steamId: string }
@@ -19,16 +23,30 @@ export default async function Analysis({
     ])
 
   return (
+    <Analysis
+      data={{
+        gameCount,
+        games,
+        mostPlayedGame,
+        totalPlayTime,
+        ...player,
+      }}
+    />
+  )
+}
+
+export function Analysis({ data }: { data: GamesAnalysis & Player }) {
+  return (
     <main className="flex min-h-screen max-w-6xl m-auto flex-col justify-between p-8 sm:p-24 gap-16 bg-black text-white">
       <div className="flex flex-col gap-8 flex-col-reverse sm:flex-row justify-between">
         <div className="flex flex-col gap-8">
-          <H1>{player.personaName}</H1>
+          <H1>{data.personaName}</H1>
           <div className="flex flex-row gap-8">
             <KeyMetric
               label="Total hours played"
-              value={totalPlayTime.toFixed(1)}
+              value={data.totalPlayTime.toFixed(1)}
             />
-            <KeyMetric label="Games owned" value={gameCount.toFixed(0)} />
+            <KeyMetric label="Games owned" value={data.gameCount.toFixed(0)} />
           </div>
         </div>
         <div className="sm:max-w-[256px]">
@@ -37,7 +55,7 @@ export default async function Analysis({
       </div>
       <section className="flex flex-col gap-8">
         <H2>Owned games</H2>
-        <GamesList games={games} mostPlayedGame={mostPlayedGame} />
+        <GamesList games={data.games} mostPlayedGame={data.mostPlayedGame} />
       </section>
     </main>
   )

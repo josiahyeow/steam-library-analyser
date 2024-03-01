@@ -25,7 +25,6 @@ export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
           className="w-full"
         />
       </div>
-
       <div className="flex flex-col gap-4 p-4">
         <div className="flex flex-row gap-4">
           <h3 className="font-bold">{game.name}</h3>
@@ -39,7 +38,6 @@ export function GameCard({ game, tag }: { game: Game; tag?: React.ReactNode }) {
               {playtime}
             </div>
           </div>
-
           <div>
             <h4 className="text-xs">Last played on</h4>
             <div className="flex flex-row justify-center items-center gap-2">

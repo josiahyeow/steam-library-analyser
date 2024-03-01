@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom"
 import { render, screen } from "@testing-library/react"
-import { Analysis } from "./page"
+import { Analysis } from "./analysis"
 
 jest.mock("../api/analyse")
 
-describe("Analysis page", () => {
+describe("Analysis", () => {
   beforeEach(() => {
     jest.resetAllMocks()
     const data = {
